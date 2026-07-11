@@ -1,0 +1,1 @@
+{"mappings":"","sources":["src/main.js","src/js/header.js","src/js/events.js","src/js/pages.js","src/js/modal.js"],"sourcesContent":["import \"./js/header.js\";\r\nimport \"./js/events.js\";\r\nimport \"./js/pages.js\";\r\nimport \"./js/modal.js\"","","","",""],"names":[],"version":3,"file":"project.74fcbea5.js.map"}
