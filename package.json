@@ -1,0 +1,33 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "dev": "npx parcel src/index.html",
+    "build": "parcel build src/index.html --public-url /project/",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SviatoslavFedosiuk/project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SviatoslavFedosiuk/project/issues"
+  },
+  "homepage": "https://github.com/SviatoslavFedosiuk/project#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.16.4",
+    "parcel": "^2.16.4",
+    "posthtml": "^0.16.7",
+    "posthtml-include": "^2.0.1",
+    "sass": "^1.101.0"
+  },
+  "dependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}
