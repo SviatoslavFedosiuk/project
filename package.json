@@ -28,6 +28,7 @@
     "sass": "^1.101.0"
   },
   "dependencies": {
+    "basiclightbox": "^5.0.4",
     "gh-pages": "^6.3.0"
   }
 }
