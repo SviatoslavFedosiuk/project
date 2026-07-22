@@ -1,0 +1,200 @@
+@use "../base/root" as *;
+
+.events {
+  padding: 40px 0 60px;
+
+  @media screen and (min-width: 768px) {
+    padding: 50px 0 80px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    padding: 60px 0 100px;
+  }
+
+
+  &__form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+
+  &__input,
+  &__i {
+    width: 270px;
+    height: 50px;
+    padding: 0 20px;
+
+    border: none;
+    outline: none;
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, 0.2);
+    color: $white;
+    font-size: 16px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  button {
+    height: 50px;
+    padding: 0 28px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: $pink;
+    color: $white;
+    cursor: pointer;
+
+    transition: 250ms;
+
+    &:hover {
+      opacity: .85;
+    }
+  }
+
+  
+  &__gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 40px 14px;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @media screen and (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 50px 30px;
+    }
+
+    @media screen and (min-width: 1200px) {
+      gap: 60px 56px;
+    }
+  }
+
+  &__part {
+    position: relative;
+    text-align: center;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      right: -10px;
+
+      width: 109px;
+      height: 101px;
+
+      border: 1px solid rgba(220, 86, 197, 0.3);
+      border-radius: 50px 0;
+
+      z-index: 0;
+
+      @media screen and (min-width: 768px) {
+        width: 153px;
+        height: 143px;
+      }
+    }
+  }
+
+  &__img {
+    position: relative;
+    z-index: 1;
+
+    display: block;
+
+    width: 128px;
+    height: 161px;
+
+    object-fit: cover;
+    border-radius: 50px 0;
+
+    margin-bottom: 12px;
+
+    transition: transform 250ms;
+
+    @media screen and (min-width: 768px) {
+      width: 180px;
+      height: 227px;
+    }
+  }
+
+  &__part:hover &__img {
+    transform: translateY(-6px);
+  }
+
+  .stats {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__names {
+    color: $pink;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+
+    @media screen and (min-width: 768px) {
+      font-size: 16px;
+    }
+  }
+
+  &__date {
+    color: $white;
+    font-size: 14px;
+    margin-bottom: 6px;
+
+    @media screen and (min-width: 768px) {
+      font-size: 16px;
+    }
+  }
+
+  &__locate {
+    color: $white;
+    font-size: 12px;
+    font-weight: 600;
+
+    @media screen and (min-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
+
+  &__elements {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 60px;
+  }
+
+  &__page {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    color: $white;
+    cursor: pointer;
+
+    transition: 250ms;
+
+    &:hover,
+    &.active {
+      border-color: $pink;
+      color: $pink;
+    }
+  }
+}
