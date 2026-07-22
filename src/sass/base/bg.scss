@@ -8,34 +8,29 @@ body{
   pointer-events: none;
   z-index: -1;
 }
-
 .circle {
   position: absolute;
   border: 1px solid rgb(46, 46, 46);
   border-radius: 50%;
 }
-
 .circle-1 {
   width: 180px;
   height: 180px;
   top: 120px;
   left: -70px;
 }
-
 .circle-2 {
   width: 140px;
   height: 140px;
   bottom: 100px;
   right: -40px;
 }
-
 .square {
   position: absolute;
   width: 120px;
   height: 120px;
   border: 1px solid rgb(46, 46, 46);
 }
-
 .square-1 {
   right: 40px;
   top: 400px;
