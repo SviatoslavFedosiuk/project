@@ -714,19 +714,363 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"fILKw":[function(require,module,exports,__globalThis) {
+var _basiclightbox = require("basiclightbox");
+var _basicLightboxMinCss = require("basiclightbox/dist/basicLightbox.min.css");
 var _headerJs = require("./js/header.js");
 var _eventsJs = require("./js/events.js");
 var _pagesJs = require("./js/pages.js");
 var _modalJs = require("./js/modal.js");
+var _storeJs = require("./js/store.js");
 
-},{"./js/header.js":"7clXR","./js/events.js":"aKbDR","./js/pages.js":"jMDee","./js/modal.js":"jJ31c"}],"7clXR":[function(require,module,exports,__globalThis) {
+},{"./js/header.js":"7clXR","./js/events.js":"aKbDR","./js/pages.js":"jMDee","./js/modal.js":"jJ31c","basiclightbox":"io0Ts","basiclightbox/dist/basicLightbox.min.css":"lf3c2","./js/store.js":"9fXba"}],"7clXR":[function(require,module,exports,__globalThis) {
 
 },{}],"aKbDR":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _contriesJson = require("../../contries.json");
+var _contriesJsonDefault = parcelHelpers.interopDefault(_contriesJson);
+var _store = require("./store");
+const URL = "https://app.ticketmaster.com/discovery/v2/events.json";
+const API_KEY = "ezWc074ZK650GLmxX6jhWkiy8pziLAGk";
+let search = "";
+let countryCode = "";
+let page = 0;
+const limit = 12;
+const galleryRef = document.querySelector(".events__gallery");
+const formRef = document.querySelector(".events__form");
+const divRef = document.querySelector(".events__elements");
+formRef.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    search = e.currentTarget.elements.search.value.trim();
+    const countryName = e.currentTarget.elements.country.value.trim();
+    const country = (0, _contriesJsonDefault.default).find(({ code })=>code.toLowerCase() === countryName.toLowerCase());
+    if (!country) {
+        alert("Country not found");
+        return;
+    }
+    countryCode = country.code;
+    page = 0;
+    galleryRef.innerHTML = "";
+    const events = await getEvents();
+    (0, _store.setCurrentEvents)(events);
+    render(events);
+});
+async function getEvents() {
+    const res = await fetch(`${URL}?apikey=${API_KEY}&keyword=${encodeURIComponent(search)}&countryCode=${countryCode}&page=${page}&size=${limit}`);
+    const data = await res.json();
+    console.log(data);
+    return data._embedded?.events || [];
+}
+function render(events) {
+    const markup = events.map((event)=>{
+        const city = event._embedded?.venues?.[0]?.city?.name ?? "";
+        return `
+        <li class="events__part" data-id="${event.id}">
+          <img
+            src="${event.images[0].url}"
+            alt="${event.name}"
+            class="events__img"
+          />
 
-},{}],"jMDee":[function(require,module,exports,__globalThis) {
+          <div class="stats">
+            <h2 class="events__names">${event.name}</h2>
+
+            <p class="events__date">
+              ${event.dates.start.localDate}
+            </p>
+
+            <p class="events__locate">
+              ${city}
+            </p>
+          </div>
+        </li>
+      `;
+    }).join("");
+    galleryRef.insertAdjacentHTML("beforeend", markup);
+}
+const observer = new IntersectionObserver(async (entries)=>{
+    const entry = entries[0];
+    if (!entry.isIntersecting || !search || !countryCode) return;
+    page++;
+    const events = await getEvents();
+    if (events.length === 0) return;
+    (0, _store.addCurrentEvents)(events);
+    render(events);
+}, {
+    rootMargin: "300px"
+});
+observer.observe(divRef);
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../contries.json":"f2rBx","./store":"9fXba"}],"jnFvT":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"f2rBx":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse("[{\"name\":\"Ukraine\",\"code\":\"UA\"},{\"name\":\"United States\",\"code\":\"US\"},{\"name\":\"Canada\",\"code\":\"CA\"},{\"name\":\"United Kingdom\",\"code\":\"GB\"},{\"name\":\"Germany\",\"code\":\"DE\"},{\"name\":\"France\",\"code\":\"FR\"},{\"name\":\"Spain\",\"code\":\"ES\"},{\"name\":\"Italy\",\"code\":\"IT\"},{\"name\":\"Poland\",\"code\":\"PL\"},{\"name\":\"Netherlands\",\"code\":\"NL\"},{\"name\":\"Belgium\",\"code\":\"BE\"},{\"name\":\"Austria\",\"code\":\"AT\"},{\"name\":\"Switzerland\",\"code\":\"CH\"},{\"name\":\"Denmark\",\"code\":\"DK\"},{\"name\":\"Sweden\",\"code\":\"SE\"},{\"name\":\"Norway\",\"code\":\"NO\"},{\"name\":\"Finland\",\"code\":\"FI\"},{\"name\":\"Ireland\",\"code\":\"IE\"},{\"name\":\"Portugal\",\"code\":\"PT\"},{\"name\":\"Australia\",\"code\":\"AU\"},{\"name\":\"New Zealand\",\"code\":\"NZ\"},{\"name\":\"Japan\",\"code\":\"JP\"}]");
+
+},{}],"9fXba":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "currentEvents", ()=>currentEvents);
+parcelHelpers.export(exports, "setCurrentEvents", ()=>setCurrentEvents);
+parcelHelpers.export(exports, "addCurrentEvents", ()=>addCurrentEvents);
+let currentEvents = [];
+function setCurrentEvents(events) {
+    currentEvents = [
+        ...events
+    ];
+}
+function addCurrentEvents(events) {
+    currentEvents.push(...events);
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jMDee":[function(require,module,exports,__globalThis) {
 
 },{}],"jJ31c":[function(require,module,exports,__globalThis) {
+var _basiclightbox = require("basiclightbox");
+var _basicLightboxMinCss = require("basiclightbox/dist/basicLightbox.min.css");
+var _store = require("./store");
+const galleryRef = document.querySelector(".events__gallery");
+let instance = null;
+galleryRef.addEventListener("click", openModal);
+function openModal(e) {
+    const card = e.target.closest(".events__part");
+    if (!card) return;
+    const event = (0, _store.currentEvents).find((item)=>item.id === card.dataset.id);
+    if (!event) return;
+    const image = event.images[0].url;
+    const name = event.name;
+    const description = event.info || event.pleaseNote || "No information";
+    const date = event.dates.start.localDate;
+    const time = event.dates.start.localTime || "";
+    const city = event._embedded?.venues?.[0]?.city?.name || "";
+    const venue = event._embedded?.venues?.[0]?.name || "";
+    const url = event.url;
+    let prices = "";
+    if (event.priceRanges) prices = event.priceRanges.map((item)=>`
+          <p>
+            ${item.type}: ${item.min}-${item.max} ${item.currency}
+          </p>
 
-},{}]},["iUuJv","fILKw"], "fILKw", "parcelRequirebbb8", {})
+          <a
+            class="modal__btn"
+            href="${url}"
+            target="_blank"
+          >
+            BUY TICKETS
+          </a>
+        `).join("");
+    else prices = `
+      <p>Price unavailable</p>
+
+      <a
+        class="modal__btn"
+        href="${url}"
+        target="_blank"
+      >
+        BUY TICKETS
+      </a>
+    `;
+    instance = _basiclightbox.create(`
+    <div class="modal">
+
+      <button class="modal__close">
+        &times;
+      </button>
+
+      <img
+        class="modal__logo"
+        src="${image}"
+        alt="${name}"
+      >
+
+      <div class="modal__content">
+
+        <img
+          class="modal__poster"
+          src="${image}"
+          alt="${name}"
+        >
+
+        <div class="modal__info">
+
+          <div class="modal__item">
+            <h3>INFO</h3>
+            <p>${description}</p>
+          </div>
+
+          <div class="modal__item">
+            <h3>WHEN</h3>
+            <p>${date}</p>
+            <p>${time}</p>
+          </div>
+
+          <div class="modal__item">
+            <h3>WHERE</h3>
+            <p>${city}</p>
+            <p>${venue}</p>
+          </div>
+
+          <div class="modal__item">
+            <h3>WHO</h3>
+            <p>${name}</p>
+          </div>
+
+          <div class="modal__item">
+            <h3>PRICES</h3>
+            ${prices}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  `);
+    instance.show();
+    document.querySelector(".modal__close").addEventListener("click", closeModal);
+    window.addEventListener("keydown", onEsc);
+}
+function closeModal() {
+    if (!instance) return;
+    instance.close();
+    instance = null;
+    window.removeEventListener("keydown", onEsc);
+}
+function onEsc(e) {
+    if (e.key === "Escape") closeModal();
+}
+
+},{"basiclightbox":"io0Ts","./store":"9fXba","basiclightbox/dist/basicLightbox.min.css":"lf3c2"}],"io0Ts":[function(require,module,exports,__globalThis) {
+!function(e) {
+    module.exports = e();
+}(function() {
+    return (function e(n, t, o) {
+        function r(c, u) {
+            if (!t[c]) {
+                if (!n[c]) {
+                    var s = undefined;
+                    if (!u && s) return s(c, !0);
+                    if (i) return i(c, !0);
+                    var a = new Error("Cannot find module '" + c + "'");
+                    throw a.code = "MODULE_NOT_FOUND", a;
+                }
+                var l = t[c] = {
+                    exports: {}
+                };
+                n[c][0].call(l.exports, function(e) {
+                    return r(n[c][1][e] || e);
+                }, l, l.exports, e, n, t, o);
+            }
+            return t[c].exports;
+        }
+        for(var i = undefined, c = 0; c < o.length; c++)r(o[c]);
+        return r;
+    })({
+        1: [
+            function(e, n, t) {
+                "use strict";
+                Object.defineProperty(t, "__esModule", {
+                    value: !0
+                }), t.create = t.visible = void 0;
+                var o = function(e) {
+                    var n = arguments.length > 1 && void 0 !== arguments[1] && arguments[1], t = document.createElement("div");
+                    return t.innerHTML = e.trim(), !0 === n ? t.children : t.firstChild;
+                }, r = function(e, n) {
+                    var t = e.children;
+                    return 1 === t.length && t[0].tagName === n;
+                }, i = function(e) {
+                    return null != (e = e || document.querySelector(".basicLightbox")) && !0 === e.ownerDocument.body.contains(e);
+                };
+                t.visible = i;
+                t.create = function(e, n) {
+                    var t = function(e, n) {
+                        var t = o('\n\t\t<div class="basicLightbox '.concat(n.className, '">\n\t\t\t<div class="basicLightbox__placeholder" role="dialog"></div>\n\t\t</div>\n\t')), i = t.querySelector(".basicLightbox__placeholder");
+                        e.forEach(function(e) {
+                            return i.appendChild(e);
+                        });
+                        var c = r(i, "IMG"), u = r(i, "VIDEO"), s = r(i, "IFRAME");
+                        return !0 === c && t.classList.add("basicLightbox--img"), !0 === u && t.classList.add("basicLightbox--video"), !0 === s && t.classList.add("basicLightbox--iframe"), t;
+                    }(e = function(e) {
+                        var n = "string" == typeof e, t = e instanceof HTMLElement == 1;
+                        if (!1 === n && !1 === t) throw new Error("Content must be a DOM element/node or string");
+                        return !0 === n ? Array.from(o(e, !0)) : "TEMPLATE" === e.tagName ? [
+                            e.content.cloneNode(!0)
+                        ] : Array.from(e.children);
+                    }(e), n = function() {
+                        var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                        if (null == (e = Object.assign({}, e)).closable && (e.closable = !0), null == e.className && (e.className = ""), null == e.onShow && (e.onShow = function() {}), null == e.onClose && (e.onClose = function() {}), "boolean" != typeof e.closable) throw new Error("Property `closable` must be a boolean");
+                        if ("string" != typeof e.className) throw new Error("Property `className` must be a string");
+                        if ("function" != typeof e.onShow) throw new Error("Property `onShow` must be a function");
+                        if ("function" != typeof e.onClose) throw new Error("Property `onClose` must be a function");
+                        return e;
+                    }(n)), c = function(e) {
+                        return !1 !== n.onClose(u) && function(e, n) {
+                            return e.classList.remove("basicLightbox--visible"), setTimeout(function() {
+                                return !1 === i(e) || e.parentElement.removeChild(e), n();
+                            }, 410), !0;
+                        }(t, function() {
+                            if ("function" == typeof e) return e(u);
+                        });
+                    };
+                    !0 === n.closable && t.addEventListener("click", function(e) {
+                        e.target === t && c();
+                    });
+                    var u = {
+                        element: function() {
+                            return t;
+                        },
+                        visible: function() {
+                            return i(t);
+                        },
+                        show: function(e) {
+                            return !1 !== n.onShow(u) && function(e, n) {
+                                return document.body.appendChild(e), setTimeout(function() {
+                                    requestAnimationFrame(function() {
+                                        return e.classList.add("basicLightbox--visible"), n();
+                                    });
+                                }, 10), !0;
+                            }(t, function() {
+                                if ("function" == typeof e) return e(u);
+                            });
+                        },
+                        close: c
+                    };
+                    return u;
+                };
+            },
+            {}
+        ]
+    }, {}, [
+        1
+    ])(1);
+});
+
+},{}],"lf3c2":[function() {},{}],"lf3c2":[function() {},{}]},["iUuJv","fILKw"], "fILKw", "parcelRequirebbb8", {})
 
 //# sourceMappingURL=project.1fcc916e.js.map
