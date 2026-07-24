@@ -18,18 +18,27 @@ formRef.addEventListener("submit", async (e) => {
 
   search = e.currentTarget.elements.search.value.trim();
 
-  const countryName = e.currentTarget.elements.country.value.trim();
+  const countryInput = e.currentTarget.elements.country.value
+    .trim()
+    .toLowerCase();
 
-  const country = countries.find(
-    ({ code }) => code.toLowerCase() === countryName.toLowerCase()
-  );
+  countryCode = "";
 
-  if (!country) {
-    alert("Country not found");
-    return;
+  if (countryInput) {
+    const country = countries.find(({ name, code }) => {
+      return (
+        name.toLowerCase() === countryInput ||
+        code.toLowerCase() === countryInput
+      );
+    });
+
+    if (!country) {
+      alert("Country not found");
+      return;
+    }
+
+    countryCode = country.code;
   }
-
-  countryCode = country.code;
 
   page = 0;
   galleryRef.innerHTML = "";
@@ -37,20 +46,23 @@ formRef.addEventListener("submit", async (e) => {
   const events = await getEvents();
 
   setCurrentEvents(events);
-
   render(events);
 });
 
 async function getEvents() {
-  const res = await fetch(
-    `${URL}?apikey=${API_KEY}&keyword=${encodeURIComponent(
-      search
-    )}&countryCode=${countryCode}&page=${page}&size=${limit}`
-  );
+  const params = new URLSearchParams({
+    apikey: API_KEY,
+    keyword: search,
+    page,
+    size: limit,
+  });
 
+  if (countryCode) {
+    params.append("countryCode", countryCode);
+  }
+
+  const res = await fetch(`${URL}?${params}`);
   const data = await res.json();
-
-  console.log(data);
 
   return data._embedded?.events || [];
 }
