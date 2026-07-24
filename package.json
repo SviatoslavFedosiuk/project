@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/SviatoslavFedosiuk/project/issues"
   },
-  "homepage": "https://github.com/SviatoslavFedosiuk/project#readme",
+  "homepage": "https://SviatoslavFedosiuk.github.io/project/",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.16.4",
     "buffer": "^6.0.3",
