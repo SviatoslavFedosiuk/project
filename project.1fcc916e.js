@@ -722,7 +722,112 @@ var _pagesJs = require("./js/pages.js");
 var _modalJs = require("./js/modal.js");
 var _storeJs = require("./js/store.js");
 
-},{"./js/header.js":"7clXR","./js/events.js":"aKbDR","./js/pages.js":"jMDee","./js/modal.js":"jJ31c","basiclightbox":"io0Ts","basiclightbox/dist/basicLightbox.min.css":"lf3c2","./js/store.js":"9fXba"}],"7clXR":[function(require,module,exports,__globalThis) {
+},{"basiclightbox":"io0Ts","basiclightbox/dist/basicLightbox.min.css":"lf3c2","./js/header.js":"7clXR","./js/events.js":"aKbDR","./js/pages.js":"jMDee","./js/modal.js":"jJ31c","./js/store.js":"9fXba"}],"io0Ts":[function(require,module,exports,__globalThis) {
+!function(e) {
+    module.exports = e();
+}(function() {
+    return (function e(n, t, o) {
+        function r(c, u) {
+            if (!t[c]) {
+                if (!n[c]) {
+                    var s = undefined;
+                    if (!u && s) return s(c, !0);
+                    if (i) return i(c, !0);
+                    var a = new Error("Cannot find module '" + c + "'");
+                    throw a.code = "MODULE_NOT_FOUND", a;
+                }
+                var l = t[c] = {
+                    exports: {}
+                };
+                n[c][0].call(l.exports, function(e) {
+                    return r(n[c][1][e] || e);
+                }, l, l.exports, e, n, t, o);
+            }
+            return t[c].exports;
+        }
+        for(var i = undefined, c = 0; c < o.length; c++)r(o[c]);
+        return r;
+    })({
+        1: [
+            function(e, n, t) {
+                "use strict";
+                Object.defineProperty(t, "__esModule", {
+                    value: !0
+                }), t.create = t.visible = void 0;
+                var o = function(e) {
+                    var n = arguments.length > 1 && void 0 !== arguments[1] && arguments[1], t = document.createElement("div");
+                    return t.innerHTML = e.trim(), !0 === n ? t.children : t.firstChild;
+                }, r = function(e, n) {
+                    var t = e.children;
+                    return 1 === t.length && t[0].tagName === n;
+                }, i = function(e) {
+                    return null != (e = e || document.querySelector(".basicLightbox")) && !0 === e.ownerDocument.body.contains(e);
+                };
+                t.visible = i;
+                t.create = function(e, n) {
+                    var t = function(e, n) {
+                        var t = o('\n\t\t<div class="basicLightbox '.concat(n.className, '">\n\t\t\t<div class="basicLightbox__placeholder" role="dialog"></div>\n\t\t</div>\n\t')), i = t.querySelector(".basicLightbox__placeholder");
+                        e.forEach(function(e) {
+                            return i.appendChild(e);
+                        });
+                        var c = r(i, "IMG"), u = r(i, "VIDEO"), s = r(i, "IFRAME");
+                        return !0 === c && t.classList.add("basicLightbox--img"), !0 === u && t.classList.add("basicLightbox--video"), !0 === s && t.classList.add("basicLightbox--iframe"), t;
+                    }(e = function(e) {
+                        var n = "string" == typeof e, t = e instanceof HTMLElement == 1;
+                        if (!1 === n && !1 === t) throw new Error("Content must be a DOM element/node or string");
+                        return !0 === n ? Array.from(o(e, !0)) : "TEMPLATE" === e.tagName ? [
+                            e.content.cloneNode(!0)
+                        ] : Array.from(e.children);
+                    }(e), n = function() {
+                        var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
+                        if (null == (e = Object.assign({}, e)).closable && (e.closable = !0), null == e.className && (e.className = ""), null == e.onShow && (e.onShow = function() {}), null == e.onClose && (e.onClose = function() {}), "boolean" != typeof e.closable) throw new Error("Property `closable` must be a boolean");
+                        if ("string" != typeof e.className) throw new Error("Property `className` must be a string");
+                        if ("function" != typeof e.onShow) throw new Error("Property `onShow` must be a function");
+                        if ("function" != typeof e.onClose) throw new Error("Property `onClose` must be a function");
+                        return e;
+                    }(n)), c = function(e) {
+                        return !1 !== n.onClose(u) && function(e, n) {
+                            return e.classList.remove("basicLightbox--visible"), setTimeout(function() {
+                                return !1 === i(e) || e.parentElement.removeChild(e), n();
+                            }, 410), !0;
+                        }(t, function() {
+                            if ("function" == typeof e) return e(u);
+                        });
+                    };
+                    !0 === n.closable && t.addEventListener("click", function(e) {
+                        e.target === t && c();
+                    });
+                    var u = {
+                        element: function() {
+                            return t;
+                        },
+                        visible: function() {
+                            return i(t);
+                        },
+                        show: function(e) {
+                            return !1 !== n.onShow(u) && function(e, n) {
+                                return document.body.appendChild(e), setTimeout(function() {
+                                    requestAnimationFrame(function() {
+                                        return e.classList.add("basicLightbox--visible"), n();
+                                    });
+                                }, 10), !0;
+                            }(t, function() {
+                                if ("function" == typeof e) return e(u);
+                            });
+                        },
+                        close: c
+                    };
+                    return u;
+                };
+            },
+            {}
+        ]
+    }, {}, [
+        1
+    ])(1);
+});
+
+},{}],"lf3c2":[function() {},{}],"7clXR":[function(require,module,exports,__globalThis) {
 
 },{}],"aKbDR":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -741,13 +846,18 @@ const divRef = document.querySelector(".events__elements");
 formRef.addEventListener("submit", async (e)=>{
     e.preventDefault();
     search = e.currentTarget.elements.search.value.trim();
-    const countryName = e.currentTarget.elements.country.value.trim();
-    const country = (0, _contriesJsonDefault.default).find(({ code })=>code.toLowerCase() === countryName.toLowerCase());
-    if (!country) {
-        alert("Country not found");
-        return;
+    const countryInput = e.currentTarget.elements.country.value.trim().toLowerCase();
+    countryCode = "";
+    if (countryInput) {
+        const country = (0, _contriesJsonDefault.default).find(({ name, code })=>{
+            return name.toLowerCase() === countryInput || code.toLowerCase() === countryInput;
+        });
+        if (!country) {
+            alert("Country not found");
+            return;
+        }
+        countryCode = country.code;
     }
-    countryCode = country.code;
     page = 0;
     galleryRef.innerHTML = "";
     const events = await getEvents();
@@ -755,9 +865,15 @@ formRef.addEventListener("submit", async (e)=>{
     render(events);
 });
 async function getEvents() {
-    const res = await fetch(`${URL}?apikey=${API_KEY}&keyword=${encodeURIComponent(search)}&countryCode=${countryCode}&page=${page}&size=${limit}`);
+    const params = new URLSearchParams({
+        apikey: API_KEY,
+        keyword: search,
+        page,
+        size: limit
+    });
+    if (countryCode) params.append("countryCode", countryCode);
+    const res = await fetch(`${URL}?${params}`);
     const data = await res.json();
-    console.log(data);
     return data._embedded?.events || [];
 }
 function render(events) {
@@ -800,7 +916,26 @@ const observer = new IntersectionObserver(async (entries)=>{
 });
 observer.observe(divRef);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../contries.json":"f2rBx","./store":"9fXba"}],"jnFvT":[function(require,module,exports,__globalThis) {
+},{"../../contries.json":"f2rBx","./store":"9fXba","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"f2rBx":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse("[{\"name\":\"Ukraine\",\"code\":\"UA\"},{\"name\":\"United States\",\"code\":\"US\"},{\"name\":\"Canada\",\"code\":\"CA\"},{\"name\":\"United Kingdom\",\"code\":\"GB\"},{\"name\":\"Germany\",\"code\":\"DE\"},{\"name\":\"France\",\"code\":\"FR\"},{\"name\":\"Spain\",\"code\":\"ES\"},{\"name\":\"Italy\",\"code\":\"IT\"},{\"name\":\"Poland\",\"code\":\"PL\"},{\"name\":\"Netherlands\",\"code\":\"NL\"},{\"name\":\"Belgium\",\"code\":\"BE\"},{\"name\":\"Austria\",\"code\":\"AT\"},{\"name\":\"Switzerland\",\"code\":\"CH\"},{\"name\":\"Denmark\",\"code\":\"DK\"},{\"name\":\"Sweden\",\"code\":\"SE\"},{\"name\":\"Norway\",\"code\":\"NO\"},{\"name\":\"Finland\",\"code\":\"FI\"},{\"name\":\"Ireland\",\"code\":\"IE\"},{\"name\":\"Portugal\",\"code\":\"PT\"},{\"name\":\"Australia\",\"code\":\"AU\"},{\"name\":\"New Zealand\",\"code\":\"NZ\"},{\"name\":\"Japan\",\"code\":\"JP\"}]");
+
+},{}],"9fXba":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "currentEvents", ()=>currentEvents);
+parcelHelpers.export(exports, "setCurrentEvents", ()=>setCurrentEvents);
+parcelHelpers.export(exports, "addCurrentEvents", ()=>addCurrentEvents);
+let currentEvents = [];
+function setCurrentEvents(events) {
+    currentEvents = [
+        ...events
+    ];
+}
+function addCurrentEvents(events) {
+    currentEvents.push(...events);
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -830,26 +965,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"f2rBx":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("[{\"name\":\"Ukraine\",\"code\":\"UA\"},{\"name\":\"United States\",\"code\":\"US\"},{\"name\":\"Canada\",\"code\":\"CA\"},{\"name\":\"United Kingdom\",\"code\":\"GB\"},{\"name\":\"Germany\",\"code\":\"DE\"},{\"name\":\"France\",\"code\":\"FR\"},{\"name\":\"Spain\",\"code\":\"ES\"},{\"name\":\"Italy\",\"code\":\"IT\"},{\"name\":\"Poland\",\"code\":\"PL\"},{\"name\":\"Netherlands\",\"code\":\"NL\"},{\"name\":\"Belgium\",\"code\":\"BE\"},{\"name\":\"Austria\",\"code\":\"AT\"},{\"name\":\"Switzerland\",\"code\":\"CH\"},{\"name\":\"Denmark\",\"code\":\"DK\"},{\"name\":\"Sweden\",\"code\":\"SE\"},{\"name\":\"Norway\",\"code\":\"NO\"},{\"name\":\"Finland\",\"code\":\"FI\"},{\"name\":\"Ireland\",\"code\":\"IE\"},{\"name\":\"Portugal\",\"code\":\"PT\"},{\"name\":\"Australia\",\"code\":\"AU\"},{\"name\":\"New Zealand\",\"code\":\"NZ\"},{\"name\":\"Japan\",\"code\":\"JP\"}]");
-
-},{}],"9fXba":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "currentEvents", ()=>currentEvents);
-parcelHelpers.export(exports, "setCurrentEvents", ()=>setCurrentEvents);
-parcelHelpers.export(exports, "addCurrentEvents", ()=>addCurrentEvents);
-let currentEvents = [];
-function setCurrentEvents(events) {
-    currentEvents = [
-        ...events
-    ];
-}
-function addCurrentEvents(events) {
-    currentEvents.push(...events);
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jMDee":[function(require,module,exports,__globalThis) {
+},{}],"jMDee":[function(require,module,exports,__globalThis) {
 
 },{}],"jJ31c":[function(require,module,exports,__globalThis) {
 var _basiclightbox = require("basiclightbox");
@@ -966,111 +1082,6 @@ function onEsc(e) {
     if (e.key === "Escape") closeModal();
 }
 
-},{"basiclightbox":"io0Ts","./store":"9fXba","basiclightbox/dist/basicLightbox.min.css":"lf3c2"}],"io0Ts":[function(require,module,exports,__globalThis) {
-!function(e) {
-    module.exports = e();
-}(function() {
-    return (function e(n, t, o) {
-        function r(c, u) {
-            if (!t[c]) {
-                if (!n[c]) {
-                    var s = undefined;
-                    if (!u && s) return s(c, !0);
-                    if (i) return i(c, !0);
-                    var a = new Error("Cannot find module '" + c + "'");
-                    throw a.code = "MODULE_NOT_FOUND", a;
-                }
-                var l = t[c] = {
-                    exports: {}
-                };
-                n[c][0].call(l.exports, function(e) {
-                    return r(n[c][1][e] || e);
-                }, l, l.exports, e, n, t, o);
-            }
-            return t[c].exports;
-        }
-        for(var i = undefined, c = 0; c < o.length; c++)r(o[c]);
-        return r;
-    })({
-        1: [
-            function(e, n, t) {
-                "use strict";
-                Object.defineProperty(t, "__esModule", {
-                    value: !0
-                }), t.create = t.visible = void 0;
-                var o = function(e) {
-                    var n = arguments.length > 1 && void 0 !== arguments[1] && arguments[1], t = document.createElement("div");
-                    return t.innerHTML = e.trim(), !0 === n ? t.children : t.firstChild;
-                }, r = function(e, n) {
-                    var t = e.children;
-                    return 1 === t.length && t[0].tagName === n;
-                }, i = function(e) {
-                    return null != (e = e || document.querySelector(".basicLightbox")) && !0 === e.ownerDocument.body.contains(e);
-                };
-                t.visible = i;
-                t.create = function(e, n) {
-                    var t = function(e, n) {
-                        var t = o('\n\t\t<div class="basicLightbox '.concat(n.className, '">\n\t\t\t<div class="basicLightbox__placeholder" role="dialog"></div>\n\t\t</div>\n\t')), i = t.querySelector(".basicLightbox__placeholder");
-                        e.forEach(function(e) {
-                            return i.appendChild(e);
-                        });
-                        var c = r(i, "IMG"), u = r(i, "VIDEO"), s = r(i, "IFRAME");
-                        return !0 === c && t.classList.add("basicLightbox--img"), !0 === u && t.classList.add("basicLightbox--video"), !0 === s && t.classList.add("basicLightbox--iframe"), t;
-                    }(e = function(e) {
-                        var n = "string" == typeof e, t = e instanceof HTMLElement == 1;
-                        if (!1 === n && !1 === t) throw new Error("Content must be a DOM element/node or string");
-                        return !0 === n ? Array.from(o(e, !0)) : "TEMPLATE" === e.tagName ? [
-                            e.content.cloneNode(!0)
-                        ] : Array.from(e.children);
-                    }(e), n = function() {
-                        var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-                        if (null == (e = Object.assign({}, e)).closable && (e.closable = !0), null == e.className && (e.className = ""), null == e.onShow && (e.onShow = function() {}), null == e.onClose && (e.onClose = function() {}), "boolean" != typeof e.closable) throw new Error("Property `closable` must be a boolean");
-                        if ("string" != typeof e.className) throw new Error("Property `className` must be a string");
-                        if ("function" != typeof e.onShow) throw new Error("Property `onShow` must be a function");
-                        if ("function" != typeof e.onClose) throw new Error("Property `onClose` must be a function");
-                        return e;
-                    }(n)), c = function(e) {
-                        return !1 !== n.onClose(u) && function(e, n) {
-                            return e.classList.remove("basicLightbox--visible"), setTimeout(function() {
-                                return !1 === i(e) || e.parentElement.removeChild(e), n();
-                            }, 410), !0;
-                        }(t, function() {
-                            if ("function" == typeof e) return e(u);
-                        });
-                    };
-                    !0 === n.closable && t.addEventListener("click", function(e) {
-                        e.target === t && c();
-                    });
-                    var u = {
-                        element: function() {
-                            return t;
-                        },
-                        visible: function() {
-                            return i(t);
-                        },
-                        show: function(e) {
-                            return !1 !== n.onShow(u) && function(e, n) {
-                                return document.body.appendChild(e), setTimeout(function() {
-                                    requestAnimationFrame(function() {
-                                        return e.classList.add("basicLightbox--visible"), n();
-                                    });
-                                }, 10), !0;
-                            }(t, function() {
-                                if ("function" == typeof e) return e(u);
-                            });
-                        },
-                        close: c
-                    };
-                    return u;
-                };
-            },
-            {}
-        ]
-    }, {}, [
-        1
-    ])(1);
-});
-
-},{}],"lf3c2":[function() {},{}],"lf3c2":[function() {},{}]},["iUuJv","fILKw"], "fILKw", "parcelRequirebbb8", {})
+},{"basiclightbox":"io0Ts","basiclightbox/dist/basicLightbox.min.css":"lf3c2","./store":"9fXba"}],"lf3c2":[function() {},{}]},["iUuJv","fILKw"], "fILKw", "parcelRequirebbb8", {})
 
 //# sourceMappingURL=project.1fcc916e.js.map
