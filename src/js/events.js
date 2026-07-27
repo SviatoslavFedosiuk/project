@@ -10,7 +10,7 @@ let page = 0;
 const limit = 12;
 
 const galleryRef = document.querySelector(".events__gallery");
-const formRef = document.querySelector(".events__form");
+const formRef = document.querySelector(".hero__form");
 const divRef = document.querySelector(".events__elements");
 
 async function init() {

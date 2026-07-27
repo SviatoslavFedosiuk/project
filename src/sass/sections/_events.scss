@@ -1,63 +1,15 @@
 @use "../base/root" as *;
 
 .events {
-  padding: 40px 0 60px;
+  padding: 0 0 60px;
 
   @media screen and (min-width: 768px) {
-    padding: 50px 0 80px;
+    padding: 0 0 80px;
   }
 
   @media screen and (min-width: 1200px) {
-    padding: 60px 0 100px;
+    padding: 0 0 100px;
   }
-
-
-  &__form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 60px;
-  }
-
-  &__input,
-  &__i {
-    width: 270px;
-    height: 50px;
-    padding: 0 20px;
-
-    border: none;
-    outline: none;
-    border-radius: 25px;
-
-    background: rgba(255, 255, 255, 0.2);
-    color: $white;
-    font-size: 16px;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-  }
-
-  button {
-    height: 50px;
-    padding: 0 28px;
-
-    border: none;
-    border-radius: 25px;
-
-    background: $pink;
-    color: $white;
-    cursor: pointer;
-
-    transition: 250ms;
-
-    &:hover {
-      opacity: .85;
-    }
-  }
-
   
   &__gallery {
     display: grid;
