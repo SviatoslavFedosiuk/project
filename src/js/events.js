@@ -13,6 +13,17 @@ const galleryRef = document.querySelector(".events__gallery");
 const formRef = document.querySelector(".events__form");
 const divRef = document.querySelector(".events__elements");
 
+async function init() {
+  try{
+    const events = await getEvents();
+    setCurrentEvents(events);
+    render(events);
+  } catch(error){
+    console.error(error);
+    
+  }
+}
+init()
 formRef.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -103,7 +114,7 @@ const observer = new IntersectionObserver(
   async (entries) => {
     const entry = entries[0];
 
-    if (!entry.isIntersecting || !search || !countryCode) return;
+    if (!entry.isIntersecting) return;
 
     page++;
 

@@ -5,24 +5,29 @@
 .modal {
   position: relative;
 
-  width: 272px;
-
-padding-top: 75px;
-padding-bottom: 100px;
+  
+padding-top: 24px;
+padding-bottom: 50px;
+padding-right: 10px;
+padding-left: 10px;
 
   background: #fff2fd;
-  border-radius: 300px 0;@media screen and  (min-width:768px) {
-        width: 595px;
-    }
+  border-radius: 300px 0;
+  min-width: 420px;
+  @media screen and (min-width: 768px) {
+    min-width: 595px;
+    border-radius: 240px 0;
+  }
+  @media screen and (min-width: 1200px) {
+    min-width: 930px;
 
-    @media screen and  (min-width: 1200px) {
-        width: 942px;
-    }
+  }
 
   &__close {
     position: absolute;
-    top: 30px;
-    right: 35px;
+    top: 20px;
+    right: 25px;
+
 
     border: none;
     background: transparent;
@@ -30,149 +35,145 @@ padding-bottom: 100px;
     font-size: 32px;
     color: #4c00fe;
     cursor: pointer;
+    @media screen and (min-width: 768px) {
+    top: 30px;
+    right: 35px;
+  }
   }
 
   &__logo {
     display: block;
-    width: 132px;
-    height: 132px;
+    width: 90px;
+    height: 90px;
+    margin: 0;
+    padding: 0;
 
-    margin: 0 auto 40px;
+    margin: 0 auto;
 
     border-radius: 50%;
     object-fit: cover;
+    @media screen and (min-width: 768px) {
+    width: 102px;
+    height: 102px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 132px;
+    height: 132px;
+  }
+  }
+  &__poster{
+    display: none;
+    @media screen and (min-width: 768px) {
+    display: block;
+    width: 220px;
+    height: 400px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 360.0px;
+height: 595.0px;
+
+
   }
 
-  &__content {
-    display: flex;
-    row-gap: 11px;
   }
-
-  &__poster {
-    width: 361px;
-    height: 490px;
-    object-fit: cover;
-  }
-
-  &__info {
-    flex: 1;
-    width: 420px;
-  }
-
-  &__block {
-    margin-bottom: 24px;
-  }
-
-  &__title {
-    margin-bottom: 8px;
-
-    color: #dc56c5;
-    font-size: 20px;
-    font-weight: 600;
-  }
-
-  &__text {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  &__price {
+  &__content{
+     @media screen and (min-width: 768px) {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+     }
+     @media screen and (min-width: 1200px) {
+    justify-content: start;
 
-    margin: 15px 0;
+  }
+  }
+  &__info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  @media screen and (min-width: 1200px) {
+    justify-content: start;
+    align-items: start;
+    margin-left: 53px;
   }
 
-  &__btn {
-    width: 145px;
-    height: 40px;
+  }
+  &__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @media screen and (min-width: 1200px) {
+    justify-content: start;
+    align-items: start;
+  }
+    
+  }
+  &__items{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-height: 100px;
+  overflow-y: auto;
+  max-width: 300px;
+  @media screen and (min-width: 1200px) {
+    justify-content: start;
+    align-items: start;
+max-width: 700px;
+max-height: 300px;
+  overflow-y: auto;
+  }
+  }
+  &__title{
+    color: #DC56C5;
+text-align: center;
+font-family: Montserrat;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+margin-bottom: 9px;
+margin-top: 10px;
+@media screen and (min-width: 1200px) {
+    font-size: 24px;
 
-    border: none;
-    border-radius: 5px;
-
-    background: #4c00fe;
-    color: #fff;
-
-    cursor: pointer;
-    transition: .3s;
-
-    &:hover {
-      background: #3000b3;
-    }
   }
 
-  &__author {
-    display: block;
-
-    margin: 40px auto 0;
-    padding: 12px 24px;
-
-    background: transparent;
-
-    border: 1px solid #4c00fe;
-    color: #4c00fe;
-
-    cursor: pointer;
-    transition: .3s;
-
-    &:hover {
-      background: #4c00fe;
-      color: #fff;
-    }
   }
-}
+  &__text{
+    color: #0E0E0E;
+text-align: center;
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+@media screen and (min-width: 1200px) {
+    font-size: 18px;
 
-@media screen and (max-width: 768px) {
-  .modal {
-    width: 272px;
+  }
+  }
+  &__texts{
+    max-width: 243px;
+max-height: 100.0px;
 
-    padding: 70px 20px 30px;
+  }
+  &__btn{
+    width: 145.0px;
+height: 30.0px;
+border-radius: 5px;
+background: #4C00FE;
+color: #FFF;
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
 
-    border-radius: 150px 0;
-
-    &__logo {
-      width: 70px;
-      height: 70px;
-
-      margin-bottom: 20px;
-    }
-
-    &__content {
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    &__poster {
-      width: 102px;
-      height: 130px;
-    }
-
-    &__block {
-      text-align: center;
-    }
-
-    &__title {
-      font-size: 18px;
-    }
-
-    &__text {
-      font-size: 14px;
-    }
-
-    &__price {
-      justify-content: center;
-    }
-
-    &__btn {
-      display: block;
-      margin: 10px auto;
-    }
-
-    &__author {
-      font-size: 12px;
-      padding: 10px 16px;
-    }
+display: flex;
+justify-content: center;
+align-items: center;
   }
 }
