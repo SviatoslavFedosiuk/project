@@ -843,16 +843,31 @@ const limit = 12;
 const galleryRef = document.querySelector(".events__gallery");
 const formRef = document.querySelector(".events__form");
 const divRef = document.querySelector(".events__elements");
+async function init() {
+    try {
+        const events = await getEvents();
+        (0, _store.setCurrentEvents)(events);
+        render(events);
+    } catch (error) {
+        console.error(error);
+    }
+}
+init();
 formRef.addEventListener("submit", async (e)=>{
     e.preventDefault();
     search = e.currentTarget.elements.search.value.trim();
-    const countryName = e.currentTarget.elements.country.value.trim();
-    const country = (0, _contriesJsonDefault.default).find(({ code })=>code.toLowerCase() === countryName.toLowerCase());
-    if (!country) {
-        alert("Country not found");
-        return;
+    const countryInput = e.currentTarget.elements.country.value.trim().toLowerCase();
+    countryCode = "";
+    if (countryInput) {
+        const country = (0, _contriesJsonDefault.default).find(({ name, code })=>{
+            return name.toLowerCase() === countryInput || code.toLowerCase() === countryInput;
+        });
+        if (!country) {
+            alert("Country not found");
+            return;
+        }
+        countryCode = country.code;
     }
-    countryCode = country.code;
     page = 0;
     galleryRef.innerHTML = "";
     const events = await getEvents();
@@ -860,9 +875,15 @@ formRef.addEventListener("submit", async (e)=>{
     render(events);
 });
 async function getEvents() {
-    const res = await fetch(`${URL}?apikey=${API_KEY}&keyword=${encodeURIComponent(search)}&countryCode=${countryCode}&page=${page}&size=${limit}`);
+    const params = new URLSearchParams({
+        apikey: API_KEY,
+        keyword: search,
+        page,
+        size: limit
+    });
+    if (countryCode) params.append("countryCode", countryCode);
+    const res = await fetch(`${URL}?${params}`);
     const data = await res.json();
-    console.log(data);
     return data._embedded?.events || [];
 }
 function render(events) {
@@ -894,7 +915,7 @@ function render(events) {
 }
 const observer = new IntersectionObserver(async (entries)=>{
     const entry = entries[0];
-    if (!entry.isIntersecting || !search || !countryCode) return;
+    if (!entry.isIntersecting) return;
     page++;
     const events = await getEvents();
     if (events.length === 0) return;
@@ -1024,30 +1045,30 @@ function openModal(e) {
 
         <div class="modal__info">
 
-          <div class="modal__item">
-            <h3>INFO</h3>
-            <p>${description}</p>
+          <div class="modal__items">
+            <h3 class="modal__title">INFO</h3>
+            <p modal__texts>${description}</p>
           </div>
 
           <div class="modal__item">
-            <h3>WHEN</h3>
-            <p>${date}</p>
-            <p>${time}</p>
+            <h3 class="modal__title">WHEN</h3>
+            <p class="modal__text">${date}</p>
+            <p class="modal__text">${time}</p>
           </div>
 
           <div class="modal__item">
-            <h3>WHERE</h3>
-            <p>${city}</p>
-            <p>${venue}</p>
+            <h3 class="modal__title">WHERE</h3>
+            <p class="modal__text">${city}</p>
+            <p class="modal__text">${venue}</p>
           </div>
 
           <div class="modal__item">
-            <h3>WHO</h3>
-            <p>${name}</p>
+            <h3 class="modal__title">WHO</h3>
+            <p class="modal__text">${name}</p>
           </div>
 
           <div class="modal__item">
-            <h3>PRICES</h3>
+            <h3 class="modal__title">PRICES</h3>
             ${prices}
           </div>
 
