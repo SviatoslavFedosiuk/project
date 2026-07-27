@@ -841,7 +841,7 @@ let countryCode = "";
 let page = 0;
 const limit = 12;
 const galleryRef = document.querySelector(".events__gallery");
-const formRef = document.querySelector(".events__form");
+const formRef = document.querySelector(".hero__form");
 const divRef = document.querySelector(".events__elements");
 async function init() {
     try {
@@ -1045,30 +1045,30 @@ function openModal(e) {
 
         <div class="modal__info">
 
-          <div class="modal__items">
-            <h3 class="modal__title">INFO</h3>
-            <p modal__texts>${description}</p>
+          <div class="modal__item">
+            <h3>INFO</h3>
+            <p>${description}</p>
           </div>
 
           <div class="modal__item">
-            <h3 class="modal__title">WHEN</h3>
-            <p class="modal__text">${date}</p>
-            <p class="modal__text">${time}</p>
+            <h3>WHEN</h3>
+            <p>${date}</p>
+            <p>${time}</p>
           </div>
 
           <div class="modal__item">
-            <h3 class="modal__title">WHERE</h3>
-            <p class="modal__text">${city}</p>
-            <p class="modal__text">${venue}</p>
+            <h3>WHERE</h3>
+            <p>${city}</p>
+            <p>${venue}</p>
           </div>
 
           <div class="modal__item">
-            <h3 class="modal__title">WHO</h3>
-            <p class="modal__text">${name}</p>
+            <h3>WHO</h3>
+            <p>${name}</p>
           </div>
 
           <div class="modal__item">
-            <h3 class="modal__title">PRICES</h3>
+            <h3>PRICES</h3>
             ${prices}
           </div>
 
