@@ -14,24 +14,20 @@ function openModal(e) {
 
   if (!card) return;
 
-  const event = currentEvents.find(
-    item => item.id === card.dataset.id
-  );
+  const event = currentEvents.find((item) => item.id === card.dataset.id);
 
   if (!event) return;
 
   const image = event.images[0].url;
   const name = event.name;
-  const description = event.info ||  event.pleaseNote ||"No information";
+  const description = event.info || event.pleaseNote || "No information";
 
   const date = event.dates.start.localDate;
   const time = event.dates.start.localTime || "";
 
-  const city =
-    event._embedded?.venues?.[0]?.city?.name || "";
+  const city = event._embedded?.venues?.[0]?.city?.name || "";
 
-  const venue =
-    event._embedded?.venues?.[0]?.name || "";
+  const venue = event._embedded?.venues?.[0]?.name || "";
 
   const url = event.url;
 
@@ -40,7 +36,7 @@ function openModal(e) {
   if (event.priceRanges) {
     prices = event.priceRanges
       .map(
-        item => `
+        (item) => `
           <p>
             ${item.type}: ${item.min}-${item.max} ${item.currency}
           </p>
@@ -52,7 +48,7 @@ function openModal(e) {
           >
             BUY TICKETS
           </a>
-        `
+        `,
       )
       .join("");
   } else {
@@ -128,9 +124,7 @@ function openModal(e) {
 
   instance.show();
 
-  document
-    .querySelector(".modal__close")
-    .addEventListener("click", closeModal);
+  document.querySelector(".modal__close").addEventListener("click", closeModal);
 
   window.addEventListener("keydown", onEsc);
 }

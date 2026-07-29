@@ -14,16 +14,15 @@ const formRef = document.querySelector(".hero__form");
 const divRef = document.querySelector(".events__elements");
 
 async function init() {
-  try{
+  try {
     const events = await getEvents();
     setCurrentEvents(events);
     render(events);
-  } catch(error){
+  } catch (error) {
     console.error(error);
-    
   }
 }
-init()
+init();
 formRef.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -128,7 +127,7 @@ const observer = new IntersectionObserver(
   },
   {
     rootMargin: "300px",
-  }
+  },
 );
 
 observer.observe(divRef);
