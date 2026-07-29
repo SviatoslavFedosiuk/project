@@ -1045,30 +1045,30 @@ function openModal(e) {
 
         <div class="modal__info">
 
-          <div class="modal__item">
-            <h3>INFO</h3>
-            <p>${description}</p>
+          <div class="modal__items">
+            <h3 class="modal__title">INFO</h3>
+            <p modal__texts>${description}</p>
           </div>
 
           <div class="modal__item">
-            <h3>WHEN</h3>
-            <p>${date}</p>
-            <p>${time}</p>
+            <h3 class="modal__title">WHEN</h3>
+            <p class="modal__text">${date}</p>
+            <p class="modal__text">${time}</p>
           </div>
 
           <div class="modal__item">
-            <h3>WHERE</h3>
-            <p>${city}</p>
-            <p>${venue}</p>
+            <h3 class="modal__title">WHERE</h3>
+            <p class="modal__text">${city}</p>
+            <p class="modal__text">${venue}</p>
           </div>
 
           <div class="modal__item">
-            <h3>WHO</h3>
-            <p>${name}</p>
+            <h3 class="modal__title">WHO</h3>
+            <p class="modal__text">${name}</p>
           </div>
 
           <div class="modal__item">
-            <h3>PRICES</h3>
+            <h3 class="modal__title">PRICES</h3>
             ${prices}
           </div>
 
