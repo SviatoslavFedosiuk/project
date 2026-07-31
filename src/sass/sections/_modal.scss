@@ -63,7 +63,7 @@
     display: none;
     @media screen and (min-width: 768px) {
       display: block;
-      margin-right: 30px;
+      margin-right: 140px;
       width: 200px;
       height: 300px;
     }
@@ -78,7 +78,7 @@
     @media screen and (min-width: 768px) {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
     }
     @media screen and (min-width: 1200px) {
       justify-content: start;
